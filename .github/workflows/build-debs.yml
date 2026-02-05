@@ -73,20 +73,21 @@ jobs:
                 pkg-config
 
               ARCH=$(dpkg --print-architecture)
-              ENABLE_EXAMPLES="ON"
-              if [ "$ARCH" = "riscv64" ]; then
-                  ENABLE_EXAMPLES="OFF"
-              fi
               PKG_ROOT=/tmp/pkg-root
-
               cd /src/host
+
+              ARCH=$(dpkg --print-architecture)
+              if [ "$ARCH" = "riscv64" ]; then
+                  # Find and patch the UHD library link command
+                  echo 'target_link_libraries(uhd PRIVATE atomic)' >> /src/host/lib/CMakeLists.txt
+              fi
               mkdir -p builddir && cd builddir
 
               cmake ../ \
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DCMAKE_BUILD_TYPE=Release \
                 -DENABLE_TESTS=OFF \
-                -DENABLE_EXAMPLES=${ENABLE_EXAMPLES} \
+                -DENABLE_EXAMPLES=ON \
                 -DENABLE_DOXYGEN=OFF \
                 -DENABLE_MAN_PAGES=OFF \
                 -DCMAKE_CXX_FLAGS="-latomic" \
