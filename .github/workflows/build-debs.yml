@@ -73,6 +73,10 @@ jobs:
                 pkg-config
 
               ARCH=$(dpkg --print-architecture)
+              ENABLE_EXAMPLES="ON"
+              if [ "$ARCH" = "riscv64" ]; then
+                  ENABLE_EXAMPLES="OFF"
+              fi
               PKG_ROOT=/tmp/pkg-root
 
               cd /src/host
@@ -82,7 +86,7 @@ jobs:
                 -DCMAKE_INSTALL_PREFIX=/usr \
                 -DCMAKE_BUILD_TYPE=Release \
                 -DENABLE_TESTS=OFF \
-                -DENABLE_EXAMPLES=ON \
+                -DENABLE_EXAMPLES=${ENABLE_EXAMPLES} \
                 -DENABLE_DOXYGEN=OFF \
                 -DENABLE_MAN_PAGES=OFF \
                 -DCMAKE_CXX_FLAGS="-latomic" \
