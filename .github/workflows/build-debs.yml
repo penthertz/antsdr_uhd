@@ -78,8 +78,7 @@ jobs:
 
               ARCH=$(dpkg --print-architecture)
               if [ "$ARCH" = "riscv64" ]; then
-                  # Find and patch the UHD library link command
-                  echo "target_link_libraries(uhd PRIVATE atomic)" >> lib/CMakeLists.txt
+                  echo "target_link_libraries(uhd atomic)" >> lib/CMakeLists.txt
               fi
               mkdir -p builddir && cd builddir
 
