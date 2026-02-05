@@ -84,7 +84,9 @@ jobs:
                 -DENABLE_TESTS=OFF \
                 -DENABLE_EXAMPLES=ON \
                 -DENABLE_DOXYGEN=OFF \
-                -DENABLE_MAN_PAGES=OFF
+                -DENABLE_MAN_PAGES=OFF \
+                -DCMAKE_EXE_LINKER_FLAGS="-latomic" \
+                -DCMAKE_SHARED_LINKER_FLAGS="-latomic"
 
               make -j$(nproc)
 
