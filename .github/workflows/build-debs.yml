@@ -82,7 +82,7 @@ jobs:
                 -DENABLE_EXAMPLES=ON
 
               make -j$(nproc)
-
+              mkdir -p /usr/share/doc/uhd
               # Build the .deb via checkinstall
               checkinstall \
                 --type=debian \
